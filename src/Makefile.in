@@ -45,9 +45,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_connect1_OBJECTS = connect1.$(OBJEXT)
+am_connect1_OBJECTS = connect1-connect1.$(OBJEXT)
 connect1_OBJECTS = $(am_connect1_OBJECTS)
 connect1_DEPENDENCIES =
+connect1_LINK = $(CCLD) $(connect1_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -144,6 +146,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+connect1_CFLAGS = -I/usr/include/mysql
 connect1_LDADD = -lmysqlclient
 connect1_SOURCES = connect1.c
 all: all-am
@@ -219,7 +222,7 @@ clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 connect1$(EXEEXT): $(connect1_OBJECTS) $(connect1_DEPENDENCIES) $(EXTRA_connect1_DEPENDENCIES) 
 	@rm -f connect1$(EXEEXT)
-	$(LINK) $(connect1_OBJECTS) $(connect1_LDADD) $(LIBS)
+	$(connect1_LINK) $(connect1_OBJECTS) $(connect1_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -227,7 +230,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connect1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connect1-connect1.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -242,6 +245,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+connect1-connect1.o: connect1.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect1_CFLAGS) $(CFLAGS) -MT connect1-connect1.o -MD -MP -MF $(DEPDIR)/connect1-connect1.Tpo -c -o connect1-connect1.o `test -f 'connect1.c' || echo '$(srcdir)/'`connect1.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/connect1-connect1.Tpo $(DEPDIR)/connect1-connect1.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='connect1.c' object='connect1-connect1.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect1_CFLAGS) $(CFLAGS) -c -o connect1-connect1.o `test -f 'connect1.c' || echo '$(srcdir)/'`connect1.c
+
+connect1-connect1.obj: connect1.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect1_CFLAGS) $(CFLAGS) -MT connect1-connect1.obj -MD -MP -MF $(DEPDIR)/connect1-connect1.Tpo -c -o connect1-connect1.obj `if test -f 'connect1.c'; then $(CYGPATH_W) 'connect1.c'; else $(CYGPATH_W) '$(srcdir)/connect1.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/connect1-connect1.Tpo $(DEPDIR)/connect1-connect1.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='connect1.c' object='connect1-connect1.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect1_CFLAGS) $(CFLAGS) -c -o connect1-connect1.obj `if test -f 'connect1.c'; then $(CYGPATH_W) 'connect1.c'; else $(CYGPATH_W) '$(srcdir)/connect1.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
