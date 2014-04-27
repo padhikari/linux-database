@@ -14,11 +14,15 @@ connect2_LDADD = -lmysqlclient
 select1_CFLAGS = -I/usr/include/mysql
 select1_LDADD = -lmysqlclient
 
-bin_PROGRAMS = connect1 connect2 insert update select1
+select2_CFLAGS = -I/usr/include/mysql
+select2_LDADD = -lmysqlclient
+
+bin_PROGRAMS = connect1 connect2 insert update select1 select2
 
 update_SOURCES = update.c
 connect1_SOURCES = connect1.c
 connect2_SOURCES = connect2.c
 insert_SOURCES = insert.c
 select1_SOURCES = select1.c
+select2_SOURCES = select2.c
 
