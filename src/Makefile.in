@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = connect1$(EXEEXT)
+bin_PROGRAMS = connect1$(EXEEXT) connect2$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -50,6 +50,11 @@ connect1_OBJECTS = $(am_connect1_OBJECTS)
 connect1_DEPENDENCIES =
 connect1_LINK = $(CCLD) $(connect1_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am_connect2_OBJECTS = connect2-connect2.$(OBJEXT)
+connect2_OBJECTS = $(am_connect2_OBJECTS)
+connect2_DEPENDENCIES =
+connect2_LINK = $(CCLD) $(connect2_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -58,8 +63,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(connect1_SOURCES)
-DIST_SOURCES = $(connect1_SOURCES)
+SOURCES = $(connect1_SOURCES) $(connect2_SOURCES)
+DIST_SOURCES = $(connect1_SOURCES) $(connect2_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -148,7 +153,10 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 connect1_CFLAGS = -I/usr/include/mysql
 connect1_LDADD = -lmysqlclient
+connect2_CFLAGS = -I/usr/include/mysql
+connect2_LDADD = -lmysqlclient
 connect1_SOURCES = connect1.c
+connect2_SOURCES = connect2.c
 all: all-am
 
 .SUFFIXES:
@@ -223,6 +231,9 @@ clean-binPROGRAMS:
 connect1$(EXEEXT): $(connect1_OBJECTS) $(connect1_DEPENDENCIES) $(EXTRA_connect1_DEPENDENCIES) 
 	@rm -f connect1$(EXEEXT)
 	$(connect1_LINK) $(connect1_OBJECTS) $(connect1_LDADD) $(LIBS)
+connect2$(EXEEXT): $(connect2_OBJECTS) $(connect2_DEPENDENCIES) $(EXTRA_connect2_DEPENDENCIES) 
+	@rm -f connect2$(EXEEXT)
+	$(connect2_LINK) $(connect2_OBJECTS) $(connect2_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -231,6 +242,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connect1-connect1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connect2-connect2.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -259,6 +271,20 @@ connect1-connect1.obj: connect1.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='connect1.c' object='connect1-connect1.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect1_CFLAGS) $(CFLAGS) -c -o connect1-connect1.obj `if test -f 'connect1.c'; then $(CYGPATH_W) 'connect1.c'; else $(CYGPATH_W) '$(srcdir)/connect1.c'; fi`
+
+connect2-connect2.o: connect2.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect2_CFLAGS) $(CFLAGS) -MT connect2-connect2.o -MD -MP -MF $(DEPDIR)/connect2-connect2.Tpo -c -o connect2-connect2.o `test -f 'connect2.c' || echo '$(srcdir)/'`connect2.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/connect2-connect2.Tpo $(DEPDIR)/connect2-connect2.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='connect2.c' object='connect2-connect2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect2_CFLAGS) $(CFLAGS) -c -o connect2-connect2.o `test -f 'connect2.c' || echo '$(srcdir)/'`connect2.c
+
+connect2-connect2.obj: connect2.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect2_CFLAGS) $(CFLAGS) -MT connect2-connect2.obj -MD -MP -MF $(DEPDIR)/connect2-connect2.Tpo -c -o connect2-connect2.obj `if test -f 'connect2.c'; then $(CYGPATH_W) 'connect2.c'; else $(CYGPATH_W) '$(srcdir)/connect2.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/connect2-connect2.Tpo $(DEPDIR)/connect2-connect2.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='connect2.c' object='connect2-connect2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connect2_CFLAGS) $(CFLAGS) -c -o connect2-connect2.obj `if test -f 'connect2.c'; then $(CYGPATH_W) 'connect2.c'; else $(CYGPATH_W) '$(srcdir)/connect2.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
