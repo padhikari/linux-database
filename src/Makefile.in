@@ -33,7 +33,8 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 bin_PROGRAMS = connect1$(EXEEXT) connect2$(EXEEXT) insert$(EXEEXT) \
-	update$(EXEEXT) select1$(EXEEXT) select2$(EXEEXT)
+	update$(EXEEXT) select1$(EXEEXT) select2$(EXEEXT) \
+	select3$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -71,6 +72,11 @@ select2_OBJECTS = $(am_select2_OBJECTS)
 select2_DEPENDENCIES =
 select2_LINK = $(CCLD) $(select2_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am_select3_OBJECTS = select3-select3.$(OBJEXT)
+select3_OBJECTS = $(am_select3_OBJECTS)
+select3_DEPENDENCIES =
+select3_LINK = $(CCLD) $(select3_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 am_update_OBJECTS = update-update.$(OBJEXT)
 update_OBJECTS = $(am_update_OBJECTS)
 update_DEPENDENCIES =
@@ -85,10 +91,11 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(connect1_SOURCES) $(connect2_SOURCES) $(insert_SOURCES) \
-	$(select1_SOURCES) $(select2_SOURCES) $(update_SOURCES)
+	$(select1_SOURCES) $(select2_SOURCES) $(select3_SOURCES) \
+	$(update_SOURCES)
 DIST_SOURCES = $(connect1_SOURCES) $(connect2_SOURCES) \
 	$(insert_SOURCES) $(select1_SOURCES) $(select2_SOURCES) \
-	$(update_SOURCES)
+	$(select3_SOURCES) $(update_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -187,12 +194,15 @@ select1_CFLAGS = -I/usr/include/mysql
 select1_LDADD = -lmysqlclient
 select2_CFLAGS = -I/usr/include/mysql
 select2_LDADD = -lmysqlclient
+select3_CFLAGS = -I/usr/include/mysql
+select3_LDADD = -lmysqlclient
 update_SOURCES = update.c
 connect1_SOURCES = connect1.c
 connect2_SOURCES = connect2.c
 insert_SOURCES = insert.c
 select1_SOURCES = select1.c
 select2_SOURCES = select2.c
+select3_SOURCES = select3.c
 all: all-am
 
 .SUFFIXES:
@@ -279,6 +289,9 @@ select1$(EXEEXT): $(select1_OBJECTS) $(select1_DEPENDENCIES) $(EXTRA_select1_DEP
 select2$(EXEEXT): $(select2_OBJECTS) $(select2_DEPENDENCIES) $(EXTRA_select2_DEPENDENCIES) 
 	@rm -f select2$(EXEEXT)
 	$(select2_LINK) $(select2_OBJECTS) $(select2_LDADD) $(LIBS)
+select3$(EXEEXT): $(select3_OBJECTS) $(select3_DEPENDENCIES) $(EXTRA_select3_DEPENDENCIES) 
+	@rm -f select3$(EXEEXT)
+	$(select3_LINK) $(select3_OBJECTS) $(select3_LDADD) $(LIBS)
 update$(EXEEXT): $(update_OBJECTS) $(update_DEPENDENCIES) $(EXTRA_update_DEPENDENCIES) 
 	@rm -f update$(EXEEXT)
 	$(update_LINK) $(update_OBJECTS) $(update_LDADD) $(LIBS)
@@ -294,6 +307,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/insert-insert.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/select1-select1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/select2-select2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/select3-select3.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/update-update.Po@am__quote@
 
 .c.o:
@@ -379,6 +393,20 @@ select2-select2.obj: select2.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='select2.c' object='select2-select2.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(select2_CFLAGS) $(CFLAGS) -c -o select2-select2.obj `if test -f 'select2.c'; then $(CYGPATH_W) 'select2.c'; else $(CYGPATH_W) '$(srcdir)/select2.c'; fi`
+
+select3-select3.o: select3.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(select3_CFLAGS) $(CFLAGS) -MT select3-select3.o -MD -MP -MF $(DEPDIR)/select3-select3.Tpo -c -o select3-select3.o `test -f 'select3.c' || echo '$(srcdir)/'`select3.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/select3-select3.Tpo $(DEPDIR)/select3-select3.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='select3.c' object='select3-select3.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(select3_CFLAGS) $(CFLAGS) -c -o select3-select3.o `test -f 'select3.c' || echo '$(srcdir)/'`select3.c
+
+select3-select3.obj: select3.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(select3_CFLAGS) $(CFLAGS) -MT select3-select3.obj -MD -MP -MF $(DEPDIR)/select3-select3.Tpo -c -o select3-select3.obj `if test -f 'select3.c'; then $(CYGPATH_W) 'select3.c'; else $(CYGPATH_W) '$(srcdir)/select3.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/select3-select3.Tpo $(DEPDIR)/select3-select3.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='select3.c' object='select3-select3.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(select3_CFLAGS) $(CFLAGS) -c -o select3-select3.obj `if test -f 'select3.c'; then $(CYGPATH_W) 'select3.c'; else $(CYGPATH_W) '$(srcdir)/select3.c'; fi`
 
 update-update.o: update.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(update_CFLAGS) $(CFLAGS) -MT update-update.o -MD -MP -MF $(DEPDIR)/update-update.Tpo -c -o update-update.o `test -f 'update.c' || echo '$(srcdir)/'`update.c
